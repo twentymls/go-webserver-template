@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/twentymls/go-server-test/internal/auth"
-	"github.com/twentymls/go-server-test/internal/database"
+	"github.com/twentymls/go-server-test/cmd/internal/auth"
+	"github.com/twentymls/go-server-test/cmd/internal/database"
+	"github.com/twentymls/go-server-test/cmd/internal/http_response"
 )
 
 type authHandler func(http.ResponseWriter, *http.Request, database.User)
@@ -15,14 +16,14 @@ func (cfg *apiConfig) middlewareAuth(handler authHandler) http.HandlerFunc {
 		apiKey, error := auth.GetApiKey(r.Header)
 
 		if error != nil {
-			respondWithError(w, 403, fmt.Sprintf("Failed to get API key: %v", error))
+			http_response.RespondWithError(w, 403, fmt.Sprintf("Failed to get API key: %v", error))
 			return
 		}
 
 		user, error := cfg.DB.GetUserByApiKey(r.Context(), apiKey)
 
 		if error != nil {
-			respondWithError(w, 401, fmt.Sprintf("Unauthorized"))
+			http_response.RespondWithError(w, 401, fmt.Sprintf("Unauthorized"))
 			return
 		}
 

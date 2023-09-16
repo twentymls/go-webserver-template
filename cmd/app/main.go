@@ -11,7 +11,7 @@ import (
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
-	"github.com/twentymls/go-server-test/internal/database"
+	"github.com/twentymls/go-server-test/cmd/internal/database"
 )
 
 type apiConfig struct {
@@ -19,7 +19,7 @@ type apiConfig struct {
 }
 
 func main() {
-	godotenv.Load(".env")
+	godotenv.Load("../../.env")
 
 	port := os.Getenv("PORT")
 
@@ -57,8 +57,10 @@ func main() {
 
 	v1Router.Get("/healthz", handleReadiness)
 	v1Router.Get("/error", handleError)
+
 	v1Router.Post("/users", apiCfg.handlerCreateUser)
 	v1Router.Get("/users", apiCfg.middlewareAuth(apiCfg.handlerGetUser))
+
 	v1Router.Get("/users/collection", apiCfg.handlerGetUsers)
 	v1Router.Put("/users", apiCfg.middlewareAuth(apiCfg.handlerUpdateUser))
 	v1Router.Delete("/users", apiCfg.middlewareAuth(apiCfg.handlerDeleteUser))

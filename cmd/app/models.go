@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/twentymls/go-server-test/internal/database"
+	"github.com/twentymls/go-server-test/cmd/internal/database"
 )
 
 type User struct {
