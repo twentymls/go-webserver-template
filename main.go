@@ -59,6 +59,9 @@ func main() {
 	v1Router.Get("/error", handleError)
 	v1Router.Post("/users", apiCfg.handlerCreateUser)
 	v1Router.Get("/users", apiCfg.middlewareAuth(apiCfg.handlerGetUser))
+	v1Router.Get("/users/collection", apiCfg.handlerGetUsers)
+	v1Router.Put("/users", apiCfg.middlewareAuth(apiCfg.handlerUpdateUser))
+	v1Router.Delete("/users", apiCfg.middlewareAuth(apiCfg.handlerDeleteUser))
 
 	router.Mount("/v1", v1Router)
 

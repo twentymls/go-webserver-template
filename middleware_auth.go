@@ -12,8 +12,6 @@ type authHandler func(http.ResponseWriter, *http.Request, database.User)
 
 func (cfg *apiConfig) middlewareAuth(handler authHandler) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("started GET v1/users...")
-
 		apiKey, error := auth.GetApiKey(r.Header)
 
 		if error != nil {

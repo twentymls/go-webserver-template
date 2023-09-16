@@ -24,3 +24,13 @@ func databaseUserToUser(databaseUser database.User) User {
 		ApiKey:    databaseUser.ApiKey,
 	}
 }
+
+func databaseUsersToUsers(databaseUsers []database.User) []User {
+	users := make([]User, len(databaseUsers))
+
+	for i, databaseUser := range databaseUsers {
+		users[i] = databaseUserToUser(databaseUser)
+	}
+
+	return users
+}
